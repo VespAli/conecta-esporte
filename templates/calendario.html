@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Calendário Semanal - Conecta Esporte{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <h1 class="fw-bold text-primary">Cronograma Semanal</h1>
+        <p class="text-muted mb-4">Visualize as atividades esportivas organizadas por dia da semana.</p>
+
+        <div class="row g-3">
+            {% for dia, atividades in dias.items() %}
+            <div class="col-md-4 col-lg-2">
+                <div class="card border-primary h-100">
+                    <div class="card-header bg-primary text-white text-center fw-bold small">
+                        {{ dia.upper()[:3] }}
+                    </div>
+                    <div class="card-body p-2">
+                        {% if atividades %}
+                            {% for a in atividades[:5] %}
+                            <div class="bg-light rounded p-2 mb-1 small">
+                                <strong>{{ a.horario.split(' ')[0] }}</strong> - {{ a.nome }}<br>
+                                <span class="text-muted">{{ a.local }}</span>
+                            </div>
+                            {% endfor %}
+                            {% if atividades|length > 5 %}
+                            <p class="text-center small text-muted mt-1">+{{ atividades|length - 5 }} atividades</p>
+                            {% endif %}
+                        {% else %}
+                            <p class="text-muted small text-center mt-3">Sem atividades</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Lista completa abaixo -->
+        <h3 class="fw-bold mt-5 mb-3">Detalhamento por Dia</h3>
+        {% for dia, atividades in dias.items() %}
+            {% if atividades %}
+            <h5 class="mt-4 text-primary"><i class="bi bi-calendar-day"></i> {{ dia }}</h5>
+            <div class="table-responsive">
+                <table class="table table-sm table-striped">
+                    <thead>
+                        <tr><th>Horário</th><th>Modalidade</th><th>Local</th><th>Instrutor</th><th>Faixa Etária</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for a in atividades %}
+                        <tr>
+                            <td>{{ a.horario }}</td>
+                            <td><strong>{{ a.nome }}</strong></td>
+                            <td>{{ a.local }}</td>
+                            <td>{{ a.instrutor }}</td>
+                            <td>{{ a.faixa_etaria }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

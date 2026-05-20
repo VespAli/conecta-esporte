@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Conecta Esporte - Portal de Esportes de Assis/SP{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero-section bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="badge bg-light text-primary mb-3">SECRETARIA DE ESPORTES (SEMEA)</span>
+                <h1 class="display-4 fw-bold">Onde o <span class="text-warning">esporte</span> ganha vida.</h1>
+                <p class="lead">Descubra modalidades, acompanhe o calendário oficial e participe da transformação esportiva da nossa cidade. Esporte para todos, em cada bairro de Assis.</p>
+                <div class="mt-4">
+                    <a href="{{ url_for('inscricao') }}" class="btn btn-light btn-lg me-2">
+                        <i class="bi bi-pencil-square"></i> Fazer Inscrição
+                    </a>
+                    <a href="{{ url_for('modalidades') }}" class="btn btn-outline-light btn-lg">
+                        Conheça os projetos <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 text-center mt-4 mt-lg-0">
+                <div class="bg-white bg-opacity-10 rounded-4 p-4">
+                    <i class="bi bi-people-fill display-1"></i>
+                    <h3 class="mt-2">+{{ modalidades|length }} turmas</h3>
+                    <p>ativas em toda a cidade</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NOTÍCIAS DA SEMEA -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-1">Notícias da SEMEA</h2>
+        <p class="text-muted mb-4">Fique por dentro das conquistas e eventos da nossa cidade.</p>
+
+        <div class="row g-4">
+            {% for noticia in noticias %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">Destaque</span>
+                        <h5 class="card-title fw-bold">{{ noticia.titulo }}</h5>
+                        <p class="card-text text-muted">{{ noticia.conteudo[:120] }}...</p>
+                        <small class="text-muted">
+                            <i class="bi bi-calendar"></i> {{ noticia.data_publicacao.strftime('%d/%m/%Y') }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ESCOLHA SUA MODALIDADE -->
+<section class="py-5 bg-light">
+    <div class="container text-center">
+        <h2 class="fw-bold">Escolha sua Modalidade</h2>
+        <p class="text-muted mb-4">São mais de {{ nomes_unicos|length }} modalidades ativas em diversos núcleos da cidade. Clique para ver detalhes de horários e locais.</p>
+
+        <div class="row g-3 justify-content-center">
+            {% for nome in nomes_unicos %}
+            <div class="col-6 col-md-3">
+                <a href="{{ url_for('modalidades') }}" class="text-decoration-none">
+                    <div class="card border-0 shadow-sm h-100 hover-card">
+                        <div class="card-body text-center py-4">
+                            <i class="bi bi-dribbble display-4 text-primary"></i>
+                            <h6 class="mt-2 fw-bold text-dark">{{ nome }}</h6>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA INSCRIÇÃO -->
+<section class="py-5">
+    <div class="container">
+        <div class="bg-primary text-white rounded-4 p-5 text-center">
+            <h3 class="fw-bold">Interessado em participar?</h3>
+            <p class="mb-4">As inscrições são feitas exclusivamente online através do nosso portal. O processo é rápido e a confirmação chega diretamente no seu e-mail cadastrado.</p>
+            <a href="{{ url_for('inscricao') }}" class="btn btn-light btn-lg">
+                <i class="bi bi-arrow-right-circle"></i> Ir para Inscrições
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

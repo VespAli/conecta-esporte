@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Gerenciar Modalidades - Painel SEMEA{% endblock %}
+
+{% block content %}
+<section class="py-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">Gerenciar Modalidades</h2>
+            <div>
+                <a href="{{ url_for('nova_modalidade') }}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-plus-circle"></i> Nova Modalidade
+                </a>
+                <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Modalidade</th>
+                        <th>Local</th>
+                        <th>Instrutor</th>
+                        <th>Dia</th>
+                        <th>Horário</th>
+                        <th>Faixa Etária</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in modalidades %}
+                    <tr>
+                        <td><strong>{{ m.nome }}</strong></td>
+                        <td>{{ m.local }}</td>
+                        <td>{{ m.instrutor }}</td>
+                        <td>{{ m.dia_semana }}</td>
+                        <td>{{ m.horario }}</td>
+                        <td>{{ m.faixa_etaria }}</td>
+                        <td>
+                            <a href="{{ url_for('excluir_modalidade', id=m.id) }}" 
+                               class="btn btn-outline-danger btn-sm"
+                               onclick="return confirm('Tem certeza que deseja excluir?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Inscrição Esportiva - Conecta Esporte{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="fw-bold text-primary">Inscrição Esportiva</h1>
+                <p class="text-muted mb-4">Preencha os dados abaixo para solicitar sua participação nas atividades esportivas da Secretaria Municipal de Esportes de Assis.</p>
+
+                <form method="POST" action="{{ url_for('inscricao') }}">
+
+                    <!-- ETAPA 1: Dados Pessoais -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <h4 class="fw-bold mb-3">
+                                <span class="badge bg-primary rounded-circle me-2">1</span>
+                                Dados Pessoais
+                            </h4>
+
+                            <div class="mb-3">
+                                <label for="nome_completo" class="form-label">Nome Completo</label>
+                                <input type="text" class="form-control" id="nome_completo" 
+                                       name="nome_completo" placeholder="Ex: João Silva de Assis" required>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="rg" class="form-label">RG</label>
+                                    <input type="text" class="form-control" id="rg" 
+                                           name="rg" placeholder="00.000.000-0">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="cpf" class="form-label">CPF</label>
+                                    <input type="text" class="form-control" id="cpf" 
+                                           name="cpf" placeholder="000.000.000-00" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="data_nascimento" class="form-label">Data de Nascimento</label>
+                                <input type="date" class="form-control" id="data_nascimento" 
+                                       name="data_nascimento" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ETAPA 2: Seleção de Modalidade -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <h4 class="fw-bold mb-3">
+                                <span class="badge bg-primary rounded-circle me-2">2</span>
+                                Seleção de Modalidade
+                            </h4>
+
+                            <div class="mb-3">
+                                <label for="modalidade_id" class="form-label">Escolha a Modalidade</label>
+                                <select class="form-select" id="modalidade_id" name="modalidade_id" required>
+                                    <option value="">Selecione uma modalidade...</option>
+                                    {% for m in modalidades %}
+                                    <option value="{{ m.id }}">
+                                        {{ m.nome }} - {{ m.local }} ({{ m.dia_semana }}, {{ m.horario }}) - {{ m.faixa_etaria }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <div class="form-text">
+                                    <i class="bi bi-info-circle"></i> A disponibilidade de turmas varia conforme a idade e o nível técnico do atleta.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ETAPA 3: Endereço e Contato -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <h4 class="fw-bold mb-3">
+                                <span class="badge bg-primary rounded-circle me-2">3</span>
+                                Endereço e Contato
+                            </h4>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="cep" class="form-label">CEP</label>
+                                    <input type="text" class="form-control" id="cep" 
+                                           name="cep" placeholder="19800-000">
+                                </div>
+                                <div class="col-md-8 mb-3">
+                                    <label for="logradouro" class="form-label">Logradouro / Rua</label>
+                                    <input type="text" class="form-control" id="logradouro" 
+                                           name="logradouro" placeholder="Av. Rui Barbosa">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail (Obrigatório)</label>
+                                <input type="email" class="form-control" id="email" 
+                                       name="email" placeholder="usuario@email.com" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botão de envio -->
+                    <div class="d-flex align-items-center justify-content-between bg-light rounded-4 p-4">
+                        <div>
+                            <h6 class="fw-bold mb-0"><i class="bi bi-clock-history"></i> Status da Solicitação</h6>
+                            <small class="text-muted">Você receberá a confirmação de sua pré-inscrição por e-mail após a análise do professor responsável.</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            Finalizar Inscrição
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

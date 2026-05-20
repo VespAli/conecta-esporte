@@ -1,0 +1,61 @@
+/* ============================================================
+   CONECTA ESPORTE - Estilos Customizados
+   ============================================================
+   O Bootstrap faz 90% do trabalho visual.
+   Este arquivo apenas adiciona detalhes específicos do projeto.
+   ============================================================ */
+
+/* Cores principais do projeto (azul institucional) */
+:root {
+    --cor-primaria: #0d6efd;
+    --cor-primaria-escura: #0a58ca;
+}
+
+/* Hero section (banner principal da home) */
+.hero-section {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a3d91 100%);
+}
+
+/* Cards com efeito hover */
+.hover-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1) !important;
+}
+
+/* Tabela mais legível */
+.table th {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Badge de horário */
+.badge {
+    font-weight: 500;
+}
+
+/* Form inputs com borda suave */
+.form-control:focus, .form-select:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+/* Navbar com sombra suave */
+.navbar {
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* Footer links */
+footer a:hover {
+    color: white !important;
+}
+
+/* Responsividade para calendário */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+}

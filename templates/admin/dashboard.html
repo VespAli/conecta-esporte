@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Painel SEMEA{% endblock %}
+
+{% block content %}
+<section class="py-4">
+    <div class="container">
+        <!-- Cabeçalho -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold">Painel de Controle SEMEA</h2>
+                <p class="text-muted mb-0">Gerencie modalidades esportivas, valide pré-inscrições e organize o calendário municipal de Assis.</p>
+            </div>
+            <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-box-arrow-right"></i> Sair
+            </a>
+        </div>
+
+        <!-- Cards de estatísticas -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <i class="bi bi-people-fill text-primary fs-3"></i>
+                        </div>
+                        <h3 class="fw-bold mt-2">{{ total_inscricoes }}</h3>
+                        <small class="text-muted text-uppercase">Inscritos Ativos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm border-warning">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <i class="bi bi-clipboard-check text-warning fs-3"></i>
+                            {% if pendentes > 0 %}
+                            <span class="badge bg-danger">Urgente</span>
+                            {% endif %}
+                        </div>
+                        <h3 class="fw-bold mt-2">{{ pendentes }}</h3>
+                        <small class="text-muted text-uppercase">Pendentes Validação</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <i class="bi bi-geo-alt-fill text-success fs-3"></i>
+                        <h3 class="fw-bold mt-2">{{ total_locais }}</h3>
+                        <small class="text-muted text-uppercase">Locais Ativos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm bg-primary text-white">
+                    <div class="card-body">
+                        <i class="bi bi-trophy-fill fs-3"></i>
+                        <h3 class="fw-bold mt-2">{{ total_modalidades }}</h3>
+                        <small class="text-uppercase">Modalidades</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Validação de Inscrições -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold mb-0">Validação de Inscrições</h5>
+                        <a href="{{ url_for('admin_inscricoes') }}" class="text-primary text-decoration-none small">Ver todas</a>
+                    </div>
+                    <div class="card-body">
+                        {% if inscricoes_pendentes %}
+                            {% for insc in inscricoes_pendentes %}
+                            <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width:40px;height:40px;">
+                                        <small class="fw-bold">{{ insc.nome_completo[:2].upper() }}</small>
+                                    </div>
+                                    <div>
+                                        <strong>{{ insc.nome_completo }}</strong><br>
+                                        <small class="text-muted">
+                                            Modalidade: {{ insc.modalidade.nome }} • 
+                                            Inscrição em {{ insc.data_inscricao.strftime('%d/%m') }}
+                                        </small>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a href="{{ url_for('confirmar_inscricao', id=insc.id) }}" class="btn btn-success btn-sm">
+                                        <i class="bi bi-check-circle"></i> Confirmar
+                                    </a>
+                                    <a href="{{ url_for('recusar_inscricao', id=insc.id) }}" class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-x-circle"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted text-center py-3">
+                                <i class="bi bi-check-circle-fill text-success fs-3"></i><br>
+                                Nenhuma inscrição pendente!
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu lateral -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-header bg-white">
+                        <h5 class="fw-bold mb-0">Modalidades & Locais</h5>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{ url_for('nova_modalidade') }}" class="btn btn-outline-primary w-100 mb-2 text-start">
+                            <i class="bi bi-plus-circle"></i> Nova Modalidade
+                        </a>
+                        <a href="{{ url_for('admin_modalidades') }}" class="btn btn-outline-primary w-100 mb-2 text-start">
+                            <i class="bi bi-clock"></i> Editar Horários
+                        </a>
+                        <a href="{{ url_for('admin_noticias') }}" class="btn btn-outline-primary w-100 text-start">
+                            <i class="bi bi-megaphone"></i> Novo Comunicado
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

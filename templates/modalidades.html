@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Modalidades - Conecta Esporte{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <h1 class="fw-bold text-primary">Modalidades Esportivas</h1>
+        <p class="text-muted mb-4">Confira todas as modalidades oferecidas pela SEMEA com horários, locais e instrutores.</p>
+
+        <!-- Filtro simples -->
+        <div class="mb-4">
+            <input type="text" id="filtro" class="form-control form-control-lg" 
+                   placeholder="Buscar modalidade, local ou instrutor..." 
+                   onkeyup="filtrar()">
+        </div>
+
+        <!-- Tabela de modalidades -->
+        <div class="table-responsive">
+            <table class="table table-hover" id="tabelaModalidades">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Modalidade</th>
+                        <th>Local</th>
+                        <th>Endereço</th>
+                        <th>Instrutor</th>
+                        <th>Dia</th>
+                        <th>Horário</th>
+                        <th>Faixa Etária</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in modalidades %}
+                    <tr>
+                        <td><strong>{{ m.nome }}</strong></td>
+                        <td>{{ m.local }}</td>
+                        <td class="small">{{ m.endereco }}</td>
+                        <td>{{ m.instrutor }}</td>
+                        <td>{{ m.dia_semana }}</td>
+                        <td><span class="badge bg-primary">{{ m.horario }}</span></td>
+                        <td>{{ m.faixa_etaria }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<script>
+// Função simples de filtro na tabela
+function filtrar() {
+    var input = document.getElementById("filtro").value.toLowerCase();
+    var linhas = document.getElementById("tabelaModalidades").getElementsByTagName("tr");
+    for (var i = 1; i < linhas.length; i++) {
+        var texto = linhas[i].textContent.toLowerCase();
+        linhas[i].style.display = texto.includes(input) ? "" : "none";
+    }
+}
+</script>
+{% endblock %}

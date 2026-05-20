@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Inscrições - Painel SEMEA{% endblock %}
+
+{% block content %}
+<section class="py-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold">Todas as Inscrições</h2>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left"></i> Voltar
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>E-mail</th>
+                        <th>Modalidade</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for insc in inscricoes %}
+                    <tr>
+                        <td><strong>{{ insc.nome_completo }}</strong></td>
+                        <td>{{ insc.cpf }}</td>
+                        <td>{{ insc.email }}</td>
+                        <td>{{ insc.modalidade.nome }}</td>
+                        <td>{{ insc.data_inscricao.strftime('%d/%m/%Y') }}</td>
+                        <td>
+                            {% if insc.status == 'pendente' %}
+                                <span class="badge bg-warning">Pendente</span>
+                            {% elif insc.status == 'confirmada' %}
+                                <span class="badge bg-success">Confirmada</span>
+                            {% else %}
+                                <span class="badge bg-danger">Recusada</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if insc.status == 'pendente' %}
+                            <a href="{{ url_for('confirmar_inscricao', id=insc.id) }}" class="btn btn-success btn-sm">
+                                <i class="bi bi-check"></i>
+                            </a>
+                            <a href="{{ url_for('recusar_inscricao', id=insc.id) }}" class="btn btn-danger btn-sm">
+                                <i class="bi bi-x"></i>
+                            </a>
+                            {% else %}
+                            <span class="text-muted small">—</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
