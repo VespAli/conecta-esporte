@@ -8,7 +8,7 @@
 # (rode apenas UMA VEZ, ou após apagar o banco .db)
 # ============================================================
 
-from app import app, db, Modalidade, Noticia
+from app import app, db, Modalidade, Noticia, Usuario
 
 # Dados extraídos da planilha da SEMEA (modalidades e horarios.xlsx)
 dados_modalidades = [
@@ -119,6 +119,15 @@ def popular_banco():
         for titulo, conteudo in dados_noticias:
             n = Noticia(titulo=titulo, conteudo=conteudo)
             db.session.add(n)
+            
+        # Cria usuário admin
+        Usuario.query.delete()
+        admin = Usuario(
+            nome='Administrador SEMEA',
+            email='admin@semea.assis.sp.gov.br',
+            senha='semea2026'
+        )
+        db.session.add(admin)
 
         db.session.commit()
         print(f"✓ {len(dados_modalidades)} modalidades inseridas")
