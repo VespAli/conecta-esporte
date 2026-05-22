@@ -1,4 +1,4 @@
-# Conecta Esporte 🏆
+# Conecta Esporte
 
 **Desenvolvimento de um Ambiente Digital para Divulgação das Modalidades Esportivas**
 
