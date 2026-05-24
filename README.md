@@ -86,8 +86,7 @@ conecta_esporte/
 - Alex Lafaiete Godoi
 - Alisson Gomes Paulino
 - Amanda Vitoria Rosa
-- Lucas Liberal Budoia
-
+  
 ## Orientador
 David Miguel Soares Junior
 
